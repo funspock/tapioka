@@ -1,5 +1,8 @@
 cd /backend
 cp dotenv_path/.env .
+go get "github.com/joho/godotenv"
+go get "github.com/ChimeraCoder/anaconda"
+go get "github.com/gorilla/mux"
 go run main.go
 
 http://localhost:8080/tapi (GET)
