@@ -1,6 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
 
 target 'SwiftDemoApp' do
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
+  pod 'Alamofire'
+  pod 'SwiftyJSON', '~> 4.0'
 end
