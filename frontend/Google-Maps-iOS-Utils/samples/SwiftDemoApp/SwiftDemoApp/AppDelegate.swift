@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let masterViewControler = MasterViewController()
     let navigationController = UINavigationController(rootViewController: masterViewControler)
     window?.rootViewController = navigationController
+    sleep(2)
     return true
   }
 }

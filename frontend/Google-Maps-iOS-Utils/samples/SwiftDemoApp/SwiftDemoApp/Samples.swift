@@ -17,15 +17,7 @@ import Foundation
 
 class Samples {
   class func loadSamples() -> NSArray! {
-    return [ newDemo(controller: ClusteringViewController.self,
-                     title: "Clustering",
-                     description: "Marker Clustering"),
-             newDemo(controller: KMLViewController.self,
-                     title: "KML",
-                     description: "KML Rendering"),
-             newDemo(controller: GeoJSONViewController.self,
-                     title: "GeoJSON",
-                     description: "GeoJSON Rendering"),
+    return [
              newDemo(controller: HeatmapViewController.self,
                      title: "Heatmaps",
                      description: "Heatmaps")]

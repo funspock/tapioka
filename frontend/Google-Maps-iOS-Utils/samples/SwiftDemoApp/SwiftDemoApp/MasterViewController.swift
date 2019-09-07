@@ -22,7 +22,7 @@ class MasterViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.title = "Demos"
+    self.title = "HeaTapioka"
     samples = Samples.loadSamples()
   }
 
