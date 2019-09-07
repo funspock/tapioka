@@ -2,12 +2,14 @@ package main
 
 import (
 	"os"
-    "fmt"
     "log"
 	"github.com/joho/godotenv"
 	"github.com/ChimeraCoder/anaconda"
 	"net/url"
 	"time"
+	"github.com/gorilla/mux"
+	"net/http"
+	"encoding/json"
 )
 
 func Env_load() {
@@ -29,9 +31,7 @@ type Data struct {
 }
 
 
-func main(){
-
-	Env_load()
+func GetTapiokaTweetCount(w http.ResponseWriter, r * http.Request){
 	api := getTwitterApi()
 
 	dt := time.Now()
@@ -50,8 +50,7 @@ func main(){
 						   "hyogo", "nara", "wakayama", "tottori", "shimane", "okayama", "hiroshima", "yamaguchi", "tokushima", "kagawa",
 						   "ehime", "kouchi", "fukuoka", "saga", "nagasaki", "kumamoto", "oita", "miyazaki", "kagoshima", "okinawa",
 						}
-
-
+	
 	v := url.Values{}
 	v.Set("count", "100")
 	
@@ -66,18 +65,17 @@ func main(){
 		datas = append(datas, data)
 	}
 
-	fmt.Println(datas)
+	json.NewEncoder(w).Encode(&datas)
+	
+}
 
+func main(){
 
+	Env_load()
 
-	/*
-//	count := 0
-	searchResult, _ := api.GetSearch(keyword, v)
-	for _ , tweet := range searchResult.Statuses {
-		fmt.Println(tweet.CreatedAt);
-	}
+	myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter.HandleFunc("/tapi", GetTapiokaTweetCount).Methods("GET")
 
-	fmt.Println(len(searchResult.Statuses))
-*/
+	log.Fatal(http.ListenAndServe(":8080", myRouter))
 
 }
