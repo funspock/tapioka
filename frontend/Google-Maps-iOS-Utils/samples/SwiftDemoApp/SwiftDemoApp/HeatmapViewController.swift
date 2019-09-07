@@ -28,7 +28,7 @@ class HeatmapViewController: UIViewController, GMSMapViewDelegate {
     private var gradientStartPoints = [0.2, 1.0] as? [NSNumber]
     
     override func loadView() {
-        let camera = GMSCameraPosition.camera(withLatitude: -37.848, longitude: 145.001, zoom: 10)
+        let camera = GMSCameraPosition.camera(withLatitude: 43.06417, longitude: 141.34694, zoom: 5)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.delegate = self
         self.view = mapView
@@ -38,8 +38,8 @@ class HeatmapViewController: UIViewController, GMSMapViewDelegate {
     override func viewDidLoad() {
         // Set heatmap options.
         heatmapLayer = GMUHeatmapTileLayer()
-        heatmapLayer.radius = 80
-        heatmapLayer.opacity = 0.8
+        heatmapLayer.radius = 90
+        heatmapLayer.opacity = 0.6
         heatmapLayer.gradient = GMUGradient(colors: gradientColors,
                                             startPoints: gradientStartPoints!,
                                             colorMapSize: 256)
@@ -101,33 +101,30 @@ class HeatmapViewController: UIViewController, GMSMapViewDelegate {
              "kagoshima" : [31.56028,130.55806],
              "okinawa"   : [26.2125,127.68111]]
         do {
-            // Get the data: latitude/longitude positions of police stations.
-            Alamofire.request("http://localhost:8080/tapi")
-                .responseJSON { response in
-                    guard let object = response.result.value else {
-                        return
-                    }
-                    
-                    let json = JSON(object)
-                    
-                    json.forEach { (_, json) in
-                        let prefecture = json["Prefecture"].string!
-                        let count = Int(json["Count"].string!)!
-                        
-                        if let lat_lng_info = lat_lng[prefecture] {
-                            let lat = lat_lng_info[0]
-                            let lng = lat_lng_info[1]
-                            let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat, lng), intensity: 1.0)
+            if let path = Bundle.main.url(forResource: "police_stations", withExtension: "json") {
+                let data = try Data(contentsOf: path)
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                if let object = json as? [[String: Any]] {
+                    for item in object {
+                        let prefecture = item["Prefecture"] as! String
+                        let count = item["Count"] as! Int * 100
+                        if let coordInfo = lat_lng[prefecture] {
                             var i = 0
                             while i <= count {
                                 i += 1
+                                let lat = coordInfo[0] + CLLocationDegrees.random(in: -0.2 ... 0.2)
+                                let lng = coordInfo[1] + CLLocationDegrees.random(in: -0.2 ... 0.2)
+                                let coords = GMUWeightedLatLng(coordinate: CLLocationCoordinate2DMake(lat, lng), intensity: 1.0)
                                 list.append(coords)
                             }
                         }
                     }
-                    
+                } else {
+                    print("Could not read the JSON.")
+                }
             }
-            
+        } catch {
+            print(error.localizedDescription)
         }
         // Add the latlngs to the heatmap layer.
         heatmapLayer.weightedData = list
