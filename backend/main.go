@@ -3,13 +3,14 @@ package main
 import (
 	"os"
     "log"
-	"github.com/joho/godotenv"
-	"github.com/ChimeraCoder/anaconda"
 	"net/url"
 	"time"
-	"github.com/gorilla/mux"
 	"net/http"
 	"encoding/json"
+
+	"github.com/joho/godotenv"
+	"github.com/ChimeraCoder/anaconda"
+	"github.com/gorilla/mux"
 )
 
 func Env_load() {
