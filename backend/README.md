@@ -1,3 +1,7 @@
-api /tapi
+cd /backend
+cp dotenv_path/.env .
+go run main.go
+
+http://localhost:8080/tapi (GET)
 
 [{"Prefecture":"hokkaido","Count":2},{"Prefecture":"aomori","Count":6},{"Prefecture":"iwate","Count":0},{"Prefecture":"miyagi","Count":2},{"Prefecture":"akita","Count":8},{"Prefecture":"yamagata","Count":8},{"Prefecture":"fukushima","Count":2},{"Prefecture":"ibaraki","Count":0},{"Prefecture":"tochigi","Count":6},{"Prefecture":"gunma","Count":11},{"Prefecture":"saitama","Count":4},{"Prefecture":"chiba","Count":8},{"Prefecture":"tokyo","Count":100},{"Prefecture":"kanagawa","Count":6},{"Prefecture":"niigata","Count":2},{"Prefecture":"toyama","Count":2},{"Prefecture":"ishikawa","Count":1},{"Prefecture":"fukui","Count":7},{"Prefecture":"yamanashi","Count":1},{"Prefecture":"nagano","Count":3},{"Prefecture":"gifu","Count":7},{"Prefecture":"sizuoka","Count":12},{"Prefecture":"aichi","Count":3},{"Prefecture":"mie","Count":1},{"Prefecture":"siga","Count":0},{"Prefecture":"kyoto","Count":28},{"Prefecture":"osaka","Count":43},{"Prefecture":"hyogo","Count":0},{"Prefecture":"nara","Count":5},{"Prefecture":"wakayama","Count":4},{"Prefecture":"tottori","Count":1},{"Prefecture":"shimane","Count":1},{"Prefecture":"okayama","Count":10},{"Prefecture":"hiroshima","Count":5},{"Prefecture":"yamaguchi","Count":2},{"Prefecture":"tokushima","Count":2},{"Prefecture":"kagawa","Count":3},{"Prefecture":"ehime","Count":0},{"Prefecture":"kouchi","Count":3},{"Prefecture":"fukuoka","Count":17},{"Prefecture":"saga","Count":1},{"Prefecture":"nagasaki","Count":10},{"Prefecture":"kumamoto","Count":13},{"Prefecture":"oita","Count":1},{"Prefecture":"miyazaki","Count":0},{"Prefecture":"kagoshima","Count":1},{"Prefecture":"okinawa","Count":8}]
