@@ -4,7 +4,9 @@ import (
 	"os"
     "fmt"
     "log"
-    "github.com/joho/godotenv"
+	"github.com/joho/godotenv"
+	"github.com/ChimeraCoder/anaconda"
+	"net/url"
 )
 
 func Env_load() {
@@ -14,17 +16,27 @@ func Env_load() {
     }
 }
 
+func getTwitterApi() *anaconda.TwitterApi {
+    anaconda.SetConsumerKey(os.Getenv("API_KEY"))
+    anaconda.SetConsumerSecret(os.Getenv("API_SECRET_KEY"))
+    return anaconda.NewTwitterApi(os.Getenv("ACCESS_TOKEN"), os.Getenv("ACCESS_TOKEN_SECRET"))
+}
+
 
 func main(){
 
 	Env_load()
-	api_key := os.Getenv("API_KEY")
-	api_secret_key := os.Getenv("API_SECRET_KEY")
-	access_token := os.Getenv("ACCESS_TOKEN")
-	access_token_secret := os.Getenv("ACCESS_TOKEN_SECRET")
+	api := getTwitterApi()
 
-	fmt.Println(api_key)
+	keyword := "タピオカ"
 
+	v := url.Values{}
+	v.Set("count", "100")
+
+	searchResult, _ := api.GetSearch(keyword, v)
+	for _ , tweet := range searchResult.Statuses {
+		fmt.Println(tweet.Coordinates)
+	}
 
 
 }
