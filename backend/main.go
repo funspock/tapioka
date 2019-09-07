@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/ChimeraCoder/anaconda"
 	"net/url"
+	"time"
 )
 
 func Env_load() {
@@ -23,20 +24,31 @@ func getTwitterApi() *anaconda.TwitterApi {
 }
 
 
+
+
 func main(){
 
 	Env_load()
 	api := getTwitterApi()
 
-	keyword := "タピオカ"
+	dt := time.Now()
+	date := dt.Format("2006-01-02")
+
+	keyword := "タピオカ since:" + date
 
 	v := url.Values{}
 	v.Set("count", "100")
+	
+	
 
+
+//	count := 0
 	searchResult, _ := api.GetSearch(keyword, v)
 	for _ , tweet := range searchResult.Statuses {
-		fmt.Println(tweet.Coordinates)
+		fmt.Println(tweet.CreatedAt);
 	}
+
+	fmt.Println(len(searchResult.Statuses))
 
 
 }
